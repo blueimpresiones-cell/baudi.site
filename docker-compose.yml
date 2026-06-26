@@ -1,0 +1,35 @@
+version: "3.9"
+
+# ══════════════════════════════════════════════════════
+#  FÁCIL — Docker Compose para Dokploy
+#
+#  En Dokploy: crear un servicio "Docker Compose"
+#  y apuntar a este archivo.
+#
+#  Dokploy maneja automáticamente:
+#    - SSL con Let's Encrypt
+#    - Proxy inverso (Traefik)
+#    - Dominio personalizado
+# ══════════════════════════════════════════════════════
+
+services:
+  facil-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: facil-app
+    restart: unless-stopped
+    ports:
+      - "3010:80"        # Puerto externo:interno (cambiá 3010 si está ocupado)
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    labels:
+      # Etiquetas para Traefik (proxy de Dokploy)
+      - "traefik.enable=true"
+      - "traefik.http.routers.facil.rule=Host(`tudominio.com`)"
+      - "traefik.http.routers.facil.entrypoints=websecure"
+      - "traefik.http.routers.facil.tls.certresolver=letsencrypt"
+      - "traefik.http.services.facil.loadbalancer.server.port=80"
