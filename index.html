@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script defer src="https://analytics.baudi.site/script.js" data-website-id="9bcb9f2e-fe4b-4ea8-835e-a3d09403d723"></script>
+
   <!-- Configuración de la API (cambiar URL en producción) -->
   <script>
   /* FÁCIL — Conectado a Supabase (sa-east-1, São Paulo) */
@@ -745,38 +745,45 @@ tbody td{padding:14px 20px;font-size:13px;color:var(--white);}
            style="width:200px;max-width:80%;display:block;margin:0 auto;border-radius:14px">
     </div>
     <div class="login-card" id="loginCard">
-      <h2>Iniciar Sesión</h2>
+      <h2 style="margin-bottom:6px">Iniciar Sesión</h2>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:24px;text-align:center">
+        Tu entorno privado de seguridad laboral
+      </p>
       <div class="form-group">
         <label>Correo electrónico</label>
-        <input type="email" id="loginEmail" placeholder="tu@email.com" autocomplete="email">
+        <input type="email" id="loginEmail" placeholder="tu@email.com"
+               autocomplete="email" inputmode="email">
       </div>
       <div class="form-group">
         <label>Contraseña</label>
-        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+        <input type="password" id="loginPass" placeholder="••••••••"
+               autocomplete="current-password"
+               onkeydown="if(event.key==='Enter') doLogin()">
       </div>
-      <button class="btn btn-primary" onclick="doLogin()">Ingresar a la plataforma</button>
-      <button class="btn btn-secondary" onclick="showRegister()">Crear cuenta nueva</button>
-      <div style="margin-top:16px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
+      <button class="btn btn-primary" onclick="doLogin()" style="font-size:15px;padding:14px">
+        🔐 Ingresar
+      </button>
+      <button class="btn btn-secondary" onclick="showRegister()">
+        ✨ Crear cuenta gratis
+      </button>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)">
         <button class="btn" onclick="entrarEnDemo()"
-          style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);
-                 color:rgba(255,255,255,0.8);font-size:13px;gap:8px;">
-          🎯 Probar en modo demo
+          style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);
+                 color:rgba(255,255,255,0.7);font-size:13px">
+          🎯 Probar sin registrarse (modo demo)
         </button>
-        <p style="text-align:center;margin:8px 0 0;font-size:11px;color:rgba(255,255,255,0.35);">
-          demo@facilapp.ar · demo1234
-        </p>
       </div>
-      <p style="text-align:center;margin:12px 0 0;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5">
-        Demo: <span style="color:rgba(255,255,255,0.7);font-family:monospace">demo@facilapp.ar</span> /
-        <span style="color:rgba(255,255,255,0.7);font-family:monospace">demo1234</span>
-      </p>
-      <div class="login-footer">
-        <a onclick="showForgot()">¿Olvidaste tu contraseña?</a> · <a onclick="showPricing()">Ver planes</a>
+      <div class="login-footer" style="margin-top:16px">
+        <a onclick="showForgot()" style="cursor:pointer">¿Olvidaste tu contraseña?</a>
       </div>
     </div>
     <div class="login-card hidden" id="registerCard">
-      <h2>Crear cuenta</h2>
-      <div class="plans-grid">
+      <h2 style="margin-bottom:6px">Crear cuenta</h2>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;text-align:center">
+        Gratis · Sin tarjeta · Datos 100% privados
+      </p>
+
+      <div class="plans-grid" style="margin-bottom:20px">
         <div class="plan-card selected" id="planStd" onclick="selectPlan('std')">
           <span class="plan-badge badge-free">Gratis</span>
           <div class="plan-name">Estándar</div>
@@ -786,29 +793,41 @@ tbody td{padding:14px 20px;font-size:13px;color:var(--white);}
         <div class="plan-card pro-plan" id="planPro" onclick="selectPlan('pro')">
           <span class="plan-badge badge-pro">⭐ Pro</span>
           <div class="plan-name">Pro</div>
-          <div class="plan-price">$4.500/mes · $40.000/año</div>
-          <div class="plan-limit">Empresas ilimitadas + Checklist</div>
+          <div class="plan-price">$4.500/mes</div>
+          <div class="plan-limit">Ilimitadas + Checklist</div>
         </div>
       </div>
+
       <div class="form-group">
         <label>Nombre completo</label>
-        <input type="text" id="regNombre" placeholder="Ing. Juan Pérez" autocomplete="name">
+        <input type="text" id="regNombre" placeholder="Ing. Juan Pérez"
+               autocomplete="name" autocapitalize="words">
       </div>
       <div class="form-group">
         <label>Correo electrónico</label>
-        <input type="email" id="regEmail" placeholder="tu@email.com" autocomplete="email">
+        <input type="email" id="regEmail" placeholder="tu@email.com"
+               autocomplete="email" inputmode="email">
       </div>
       <div class="form-group">
         <label>Contraseña</label>
-        <input type="password" id="regPass" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+        <input type="password" id="regPass" placeholder="Mínimo 6 caracteres"
+               autocomplete="new-password"
+               onkeydown="if(event.key==='Enter') doRegister()">
       </div>
-      <button class="btn btn-primary" onclick="doRegister()">Registrarme</button>
-      <button class="btn btn-secondary" onclick="showLogin()">Ya tengo cuenta</button>
-    </div>
-  </div>
-</div>
 
-<!-- MAIN APP -->
+      <button class="btn btn-primary" onclick="doRegister()" style="font-size:15px;padding:14px">
+        🚀 Crear mi cuenta
+      </button>
+      <button class="btn btn-secondary" onclick="showLogin()">
+        Ya tengo cuenta — Iniciar sesión
+      </button>
+
+      <p style="text-align:center;margin:16px 0 0;font-size:11px;color:rgba(255,255,255,0.3);line-height:1.6">
+        Al registrarte aceptás que tus datos se almacenan de forma segura y privada.<br>
+        Solo vos podés ver tu información.
+      </p>
+    </div>
+    <!-- MAIN APP -->
 <div id="app" class="hidden">
   <!-- SIDEBAR -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
@@ -902,6 +921,7 @@ tbody td{padding:14px 20px;font-size:13px;color:var(--white);}
 <div id="toastContainer"></div>
 
 <script>
+
 
 
 
@@ -1151,19 +1171,28 @@ async function entrarEnDemo() {
 async function doLogin() {
   var email    = ((document.getElementById('loginEmail')||{}).value||'').trim();
   var password =  (document.getElementById('loginPass') ||{}).value||'';
-  if (!email||!password) { showToast('Ingresá tu email y contraseña','error'); return; }
+  if (!email || !password) { showToast('Ingresá tu email y contraseña','error'); return; }
 
-  // ── Modo demo ──────────────────────────────────────────────────────────────
   if (email==='demo@facilapp.ar' && password==='demo1234') {
     await entrarEnDemo(); return;
   }
 
-  // ── Login real con Supabase ────────────────────────────────────────────────
   showLoading('Iniciando sesión...');
   var r = await sb.auth.signInWithPassword({ email:email, password:password });
   hideLoading();
+
   if (r.error) {
-    showToast(r.error.message==='Invalid login credentials'?'Email o contraseña incorrectos':(r.error.message||'Error al iniciar sesión'),'error');
+    var msg = r.error.message || '';
+    if (msg.includes('Invalid login credentials') || msg.includes('invalid_credentials')) {
+      msg = 'Email o contraseña incorrectos';
+    } else if (msg.includes('Email not confirmed')) {
+      msg = 'Debés confirmar tu email antes de ingresar. Revisá tu bandeja de entrada.';
+    } else if (msg.includes('Too many requests')) {
+      msg = 'Demasiados intentos. Esperá unos minutos.';
+    } else if (msg.includes('network') || msg.includes('fetch')) {
+      msg = 'Sin conexión. Verificá tu internet.';
+    }
+    showToast(msg, 'error');
     return;
   }
   await onLoginSuccess(r.data.user);
@@ -1174,17 +1203,50 @@ async function doRegister() {
   var email    = ((document.getElementById('regEmail') ||{}).value||'').trim();
   var password =  (document.getElementById('regPass')  ||{}).value||'';
   var plan     = state.selectedPlan || 'std';
-  if (!nombre||!email||!password) { showToast('Completá todos los campos','error'); return; }
-  if (password.length<8) { showToast('La contraseña debe tener al menos 8 caracteres','error'); return; }
-  showLoading('Creando cuenta...');
-  var r = await sb.auth.signUp({ email: email, password: password, options: { data: { nombre: nombre, plan: plan } } });
+
+  if (!nombre)           { showToast('Ingresá tu nombre completo','error'); return; }
+  if (!email)            { showToast('Ingresá tu email','error'); return; }
+  if (!password)         { showToast('Ingresá una contraseña','error'); return; }
+  if (password.length<6) { showToast('Mínimo 6 caracteres','error'); return; }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { showToast('Email inválido','error'); return; }
+
+  showLoading('Creando tu cuenta...');
+  var r = await sb.auth.signUp({
+    email: email, password: password,
+    options: { data: { nombre: nombre, plan: plan } }
+  });
   hideLoading();
-  if (r.error) { showToast(r.error.message||'Error al crear la cuenta','error'); return; }
-  if (r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0) {
-    showToast('Ya existe una cuenta con ese email','error'); return;
+
+  if (r.error) {
+    var msg = r.error.message || 'Error al crear la cuenta';
+    if (msg.includes('already registered') || msg.includes('already been registered')) {
+      msg = 'Ya existe una cuenta con ese email. Intentá iniciar sesión.';
+    }
+    showToast(msg, 'error');
+    return;
   }
-  showToast('¡Cuenta creada! Revisá tu email para confirmarla y luego iniciá sesión.','success');
-  setTimeout(function() { showLogin(); }, 2000);
+
+  // Si el usuario ya existe (identities vacío)
+  if (r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0) {
+    showToast('Ya existe una cuenta con ese email. Intentá iniciar sesión.','error');
+    setTimeout(function(){ showLogin(); }, 1500);
+    return;
+  }
+
+  // Intentar login inmediato (funciona si email confirm está desactivado en Supabase)
+  showLoading('Ingresando a tu cuenta...');
+  var loginR = await sb.auth.signInWithPassword({ email: email, password: password });
+  hideLoading();
+
+  if (loginR.error) {
+    // Email confirm activado — avisar que deben confirmar
+    showToast('¡Cuenta creada! Revisá tu email y confirmá para ingresar.','success');
+    setTimeout(function(){ showLogin(); }, 3000);
+    return;
+  }
+
+  showToast('¡Bienvenido/a, ' + nombre + '! Tu cuenta fue creada.','success');
+  await onLoginSuccess(loginR.data.user);
 }
 
 async function onLoginSuccess(user) {
@@ -1247,8 +1309,15 @@ function selectPlan(p) {
 }
 
 async function checkAutoLogin() {
+  var token = localStorage.getItem('sb_token');
+  if (!token) return;
   var r = await sb.auth.getUser();
-  if (r.error || !r.data.user) return;
+  if (r.error || !r.data.user) {
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_refresh');
+    localStorage.removeItem('sb_user');
+    return;
+  }
   await onLoginSuccess(r.data.user);
 }
 
@@ -3273,6 +3342,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   await checkAutoLogin();
   hideLoading();
 });
+
 
 
 
